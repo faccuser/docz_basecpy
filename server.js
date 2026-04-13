@@ -47,12 +47,18 @@ function initializeDatabase() {
         db.run(`CREATE TABLE IF NOT EXISTS applications (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             pet_id INTEGER NOT NULL,
-            type TEXT NOT NULL, -- vacina, verme, pulga
+            type TEXT NOT NULL, -- vacina_antirrabica, vacina_polivalente, vermifugacao, carrapaticida
             description TEXT NOT NULL,
+            batch_number TEXT NOT NULL,
             date TEXT NOT NULL,
             next_due_date TEXT NOT NULL,
             FOREIGN KEY (pet_id) REFERENCES pets (id)
         )`);
+
+        // Migration: ensure batch_number exists in applications (for existing DBs)
+        db.run(`ALTER TABLE applications ADD COLUMN batch_number TEXT DEFAULT ''`, (err) => {
+            // Silently fail if column already exists
+        });
     });
 }
 
@@ -100,7 +106,20 @@ app.post('/api/pets', (req, res) => {
     });
 });
 
-// 4. Applications: List by Pet
+// 4. Pets: Delete
+app.delete('/api/pets/:id', (req, res) => {
+    const pet_id = req.params.id;
+    // Also delete his applications to keep DB clean
+    db.run('DELETE FROM applications WHERE pet_id = ?', [pet_id], (err) => {
+        if (err) return res.status(500).json({ error: err.message });
+        db.run('DELETE FROM pets WHERE id = ?', [pet_id], function(err) {
+            if (err) return res.status(500).json({ error: err.message });
+            res.json({ message: 'Pet removido com sucesso' });
+        });
+    });
+});
+
+// 5. Applications: List by Pet
 app.get('/api/pets/:id/applications', (req, res) => {
     const pet_id = req.params.id;
     db.all('SELECT * FROM applications WHERE pet_id = ? ORDER BY date DESC', [pet_id], (err, rows) => {
@@ -109,19 +128,30 @@ app.get('/api/pets/:id/applications', (req, res) => {
     });
 });
 
-// 5. Applications: Add
+// 6. Applications: Add
 app.post('/api/pets/:id/applications', (req, res) => {
     const pet_id = req.params.id;
-    const { type, description, date, cycle_days = 365 } = req.body;
+    const { type, description, batch_number, date, cycle_days = 365 } = req.body;
     
-    if (!type || !description || !date) return res.status(400).json({ error: 'Dados incompletos' });
+    if (!type || !description || !batch_number || !date) {
+        return res.status(400).json({ error: 'Dados incompletos (Lote é obrigatório)' });
+    }
 
     const next_due_date = new Date(new Date(date).getTime() + (cycle_days * 24 * 60 * 60 * 1000)).toISOString().split('T')[0];
 
-    db.run('INSERT INTO applications (pet_id, type, description, date, next_due_date) VALUES (?, ?, ?, ?, ?)',
-        [pet_id, type, description, date, next_due_date], function(err) {
+    db.run('INSERT INTO applications (pet_id, type, description, batch_number, date, next_due_date) VALUES (?, ?, ?, ?, ?, ?)',
+        [pet_id, type, description, batch_number, date, next_due_date], function(err) {
         if (err) return res.status(500).json({ error: err.message });
-        res.status(201).json({ id: this.lastID, pet_id, type, description, date, next_due_date });
+        res.status(201).json({ id: this.lastID, pet_id, type, description, batch_number, date, next_due_date });
+    });
+});
+
+// 7. Applications: Delete
+app.delete('/api/applications/:id', (req, res) => {
+    const id = req.params.id;
+    db.run('DELETE FROM applications WHERE id = ?', [id], function(err) {
+        if (err) return res.status(500).json({ error: err.message });
+        res.json({ message: 'Aplicação removida com sucesso' });
     });
 });
 

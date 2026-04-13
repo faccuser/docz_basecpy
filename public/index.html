@@ -39,7 +39,7 @@
         <section id="screen-dashboard" class="screen">
             <header class="main-header">
                 <div class="user-info">
-                    <span id="tutor-name">Olá, Tutor</span>
+                    <span id="tutor-name">Tutor</span>
                     <button id="logout-btn" class="btn-icon"><i class="ph ph-sign-out"></i></button>
                 </div>
                 <div class="brand">
@@ -51,7 +51,7 @@
             <main class="content">
                 <div class="section-header">
                     <h2>Meus Pets</h2>
-                    <button id="add-pet-btn" class="btn-secondary"><i class="ph ph-plus"></i> Novo Pet</button>
+                    <button id="add-pet-btn" class="btn-secondary"><i class="ph ph-plus"></i> Novo</button>
                 </div>
 
                 <div id="pets-list" class="grid-cards">
@@ -63,27 +63,30 @@
 
         <!-- Pet Details Screen -->
         <section id="screen-pet-details" class="screen">
-            <header class="main-header">
-                <button id="back-to-dashboard" class="btn-icon"><i class="ph ph-caret-left"></i></button>
-                <div class="pet-brand">
-                    <h2 id="detail-pet-name">Nome do Pet</h2>
+            <header class="pet-detail-header">
+                <div class="top-bar">
+                    <button id="back-to-dashboard" class="btn-icon"><i class="ph ph-caret-left"></i></button>
+                    <div id="pet-status-badge" class="badge">Em dia</div>
+                    <button id="delete-pet-btn" class="btn-icon" title="Remover Pet"><i class="ph ph-trash"></i></button>
                 </div>
-                <div id="pet-status-badge" class="badge">Em dia</div>
+                
+                <div class="pet-main-info">
+                    <div class="pet-icon-circle">
+                        <i id="pet-icon" class="ph ph-dog"></i>
+                    </div>
+                    <div class="pet-text">
+                        <h2 id="detail-pet-name">Nome do Pet</h2>
+                        <div class="pet-meta-text">
+                            <span id="detail-pet-species">Cachorro</span> • 
+                            <span id="detail-pet-breed">Vira-lata</span>
+                        </div>
+                    </div>
+                </div>
             </header>
 
             <main class="content">
-                <div class="pet-info-card card">
-                    <div class="pet-avatar">
-                        <i id="pet-icon" class="ph ph-dog"></i>
-                    </div>
-                    <div class="pet-meta">
-                        <span id="detail-pet-species">Cachorro</span>
-                        <span id="detail-pet-breed">Vira-lata</span>
-                    </div>
-                </div>
-
                 <div class="section-header">
-                    <h3>Aplicações & Vacinas</h3>
+                    <h3>Aplicações</h3>
                     <button id="add-app-btn" class="btn-secondary btn-sm"><i class="ph ph-plus"></i> Aplicar</button>
                 </div>
 
@@ -129,14 +132,19 @@
                     <div class="input-group">
                         <label>O que foi aplicado?</label>
                         <select id="app-type" required>
-                            <option value="Vacina">Vacina</option>
-                            <option value="Vermifugação">Vermifugação</option>
-                            <option value="Antipulgas">Antipulgas</option>
+                            <option value="antirrabica">Vacina Antirrábica</option>
+                            <option value="polivalente">Vacina Polivalente (V8/V10/V12)</option>
+                            <option value="vermifugacao">Vermifugação (Lombriguinha)</option>
+                            <option value="carrapaticida">Carrapaticida / Antipulgas</option>
                         </select>
                     </div>
                     <div class="input-group">
                         <label>Descrição/Marca</label>
-                        <input type="text" id="app-desc" placeholder="Ex: V10, Simparic..." required>
+                        <input type="text" id="app-desc" placeholder="Ex: Nobivac, Simparic..." required>
+                    </div>
+                    <div class="input-group">
+                        <label>No. de Lote</label>
+                        <input type="text" id="app-batch" placeholder="Ex: 12345/2024" required>
                     </div>
                     <div class="input-group">
                         <label>Data da Aplicação</label>

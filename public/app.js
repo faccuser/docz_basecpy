@@ -6,6 +6,9 @@ const State = {
     applications: []
 };
 
+// Required types for "Em dia" status
+const REQUIRED_TYPES = ['antirrabica', 'polivalente', 'vermifugacao', 'carrapaticida'];
+
 // DOM Elements
 const screens = {
     login: document.getElementById('screen-login'),
@@ -33,6 +36,41 @@ const formatDate = (dateStr) => {
     return new Date(dateStr + 'T12:00:00Z').toLocaleDateString('pt-BR', options);
 };
 
+// Logic: Status Calculation
+function calculateStatus(applications) {
+    if (!applications || applications.length === 0) return 'pendente';
+    
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    
+    // Get latest application for each required type
+    const latestByType = {};
+    applications.forEach(app => {
+        if (REQUIRED_TYPES.includes(app.type)) {
+            if (!latestByType[app.type] || new Date(app.date) > new Date(latestByType[app.type].date)) {
+                latestByType[app.type] = app;
+            }
+        }
+    });
+
+    // Check if any required type is missing -> PENDENTE (RED)
+    const missingTypes = REQUIRED_TYPES.filter(type => !latestByType[type]);
+    if (missingTypes.length > 0) return 'pendente';
+
+    // Check if any is expired -> ATRASADO (YELLOW)
+    let isAtrasado = false;
+    REQUIRED_TYPES.forEach(type => {
+        const nextDue = new Date(latestByType[type].next_due_date + 'T12:00:00Z');
+        if (nextDue < today) {
+            isAtrasado = true;
+        }
+    });
+
+    if (isAtrasado) return 'atrasado';
+
+    return 'em dia';
+}
+
 // API Functions
 async function login(cpf) {
     const response = await fetch('/api/login', {
@@ -45,7 +83,17 @@ async function login(cpf) {
 
 async function fetchPets() {
     const response = await fetch(`/api/pets?tutor_id=${State.tutor.id}`);
-    State.pets = await response.json();
+    const pets = await response.json();
+    
+    // For each pet, we need to fetch its status summary
+    // In a real app, the backend would return this. Here we fetch apps for each to calculate.
+    for (let pet of pets) {
+        const appResp = await fetch(`/api/pets/${pet.id}/applications`);
+        const apps = await appResp.json();
+        pet.status = calculateStatus(apps);
+    }
+    
+    State.pets = pets;
     renderPets();
 }
 
@@ -55,27 +103,21 @@ async function fetchApplications(petId) {
     renderApplications();
 }
 
-// Logic: Status Calculation
-function calculateStatus(applications) {
-    if (applications.length === 0) return 'atrasado';
-    
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
-    
-    let status = 'em dia';
-    
-    applications.forEach(app => {
-        const nextDue = new Date(app.next_due_date + 'T12:00:00Z');
-        const diffDays = (nextDue - today) / (1000 * 60 * 60 * 24);
-        
-        if (diffDays < 0) {
-            status = 'atrasado';
-        } else if (diffDays <= 30 && status !== 'atrasado') {
-            status = 'pendente';
-        }
-    });
+async function deletePet(id) {
+    if (!confirm('Tem certeza que deseja remover este pet? Todos os registros de vacinas serão apagados.')) return;
+    const response = await fetch(`/api/pets/${id}`, { method: 'DELETE' });
+    if (response.ok) {
+        showScreen('dashboard');
+        fetchPets();
+    }
+}
 
-    return status;
+async function deleteApplication(id) {
+    if (!confirm('Deseja remover este registro de aplicação?')) return;
+    const response = await fetch(`/api/applications/${id}`, { method: 'DELETE' });
+    if (response.ok) {
+        fetchApplications(State.currentPet.id);
+    }
 }
 
 // Rendering
@@ -84,18 +126,16 @@ function renderPets() {
     container.innerHTML = '';
 
     if (State.pets.length === 0) {
-        container.innerHTML = '<div class="loading-state">Nenhum pet cadastrado. Vamos começar?</div>';
+        container.innerHTML = '<div class="loading-state">Nenhum pet cadastrado.</div>';
         return;
     }
 
     State.pets.forEach(pet => {
         const card = document.createElement('div');
-        card.className = 'pet-card card';
+        const statusClass = `status-${pet.status.replace(/ /g, '-')}`;
+        card.className = `pet-card card ${statusClass}`;
         
         const speciesIcon = pet.species === 'Gato' ? 'ph ph-cat' : 'ph ph-dog';
-        
-        // Note: For real status we'd need to fetch applications for all pets or the server would calculate it.
-        // For this MVP, we'll fetch details when clicking.
         
         card.innerHTML = `
             <div class="pet-card-main">
@@ -122,8 +162,8 @@ async function renderApplications() {
     const statusBadge = document.getElementById('pet-status-badge');
     const status = calculateStatus(State.applications);
     
-    statusBadge.textContent = status.charAt(0).toUpperCase() + status.slice(1);
-    statusBadge.className = `badge badge-${status === 'em dia' ? 'success' : (status === 'pendente' ? 'warning' : 'danger')}`;
+    statusBadge.textContent = status.toUpperCase();
+    statusBadge.className = `badge badge-${status === 'em dia' ? 'success' : (status === 'atrasado' ? 'warning' : 'danger')}`;
 
     if (State.applications.length === 0) {
         container.innerHTML = '<div class="loading-state">Nenhuma aplicação registrada.</div>';
@@ -132,9 +172,10 @@ async function renderApplications() {
 
     State.applications.forEach(app => {
         const iconMap = {
-            'Vacina': 'ph ph-needle',
-            'Vermifugação': 'ph ph-bug-beetle',
-            'Antipulgas': 'ph ph-bug'
+            'antirrabica': 'ph ph-syringe',
+            'polivalente': 'ph ph-syringe',
+            'vermifugacao': 'ph ph-pill',
+            'carrapaticida': 'ph ph-bug'
         };
 
         const item = document.createElement('div');
@@ -144,9 +185,10 @@ async function renderApplications() {
                 <i class="${iconMap[app.type] || 'ph ph-info'}"></i>
             </div>
             <div class="timeline-content">
-                <div class="date">${formatDate(app.date)}</div>
-                <h5>${app.type}: ${app.description}</h5>
-                <small>Próxima em: ${formatDate(app.next_due_date)}</small>
+                <button class="btn-delete" onclick="deleteApplication(${app.id})"><i class="ph ph-trash"></i></button>
+                <div class="date">${formatDate(app.date)}<small> | Próxima: ${formatDate(app.next_due_date)}</small></div>
+                <h5>${app.description}</h5>
+                <p style="font-size: 0.8rem; margin: 4px 0;"><strong>Lote:</strong> ${app.batch_number || 'N/I'}</p>
             </div>
         `;
         container.appendChild(item);
@@ -158,7 +200,7 @@ async function showPetDetails(pet) {
     State.currentPet = pet;
     document.getElementById('detail-pet-name').textContent = pet.name;
     document.getElementById('detail-pet-species').textContent = pet.species;
-    document.getElementById('detail-pet-breed').textContent = pet.breed || 'Raça não informada';
+    document.getElementById('detail-pet-breed').textContent = pet.breed || 'SRD';
     
     const iconEl = document.getElementById('pet-icon');
     iconEl.className = pet.species === 'Gato' ? 'ph ph-cat' : 'ph ph-dog';
@@ -167,13 +209,16 @@ async function showPetDetails(pet) {
     await fetchApplications(pet.id);
 }
 
+// Global scope for onclick handlers in strings
+window.deleteApplication = deleteApplication;
+
 // Event Listeners
 document.getElementById('login-form').onsubmit = async (e) => {
     e.preventDefault();
     const cpf = document.getElementById('cpf').value;
     const user = await login(cpf);
     State.tutor = user;
-    document.getElementById('tutor-name').textContent = `Olá, ${user.name}`;
+    document.getElementById('tutor-name').textContent = `${user.name}`;
     showScreen('dashboard');
     fetchPets();
 };
@@ -185,9 +230,12 @@ document.getElementById('logout-btn').onclick = () => {
 
 document.getElementById('back-to-dashboard').onclick = () => showScreen('dashboard');
 
+document.getElementById('delete-pet-btn').onclick = () => {
+    if (State.currentPet) deletePet(State.currentPet.id);
+};
+
 document.getElementById('add-pet-btn').onclick = () => openModal(modals.pet);
 document.getElementById('add-app-btn').onclick = () => {
-    // Set today as default date
     document.getElementById('app-date').valueAsDate = new Date();
     openModal(modals.app);
 };
@@ -226,6 +274,7 @@ document.getElementById('app-form').onsubmit = async (e) => {
     const appData = {
         type: document.getElementById('app-type').value,
         description: document.getElementById('app-desc').value,
+        batch_number: document.getElementById('app-batch').value,
         date: document.getElementById('app-date').value
     };
 
@@ -251,8 +300,7 @@ document.getElementById('cpf').oninput = (e) => {
 if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
         navigator.serviceWorker.register('/sw.js')
-            .then(reg => console.log('Service Worker registrado!', reg))
-            .catch(err => console.log('Falha ao registrar Service Worker', err));
+            .then(reg => console.log('SW OK'))
+            .catch(err => console.log('SW ERR', err));
     });
 }
-

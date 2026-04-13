@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Docz - Controle de Vacinas Pet</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#005AA3">
+</head>
+<body>
+    <div id="app">
+        <!-- Login Screen -->
+        <section id="screen-login" class="screen active">
+            <div class="login-container">
+                <header class="login-header">
+                    <div class="logo">
+                        <i class="ph ph-heartbeat"></i>
+                        <h1>docz</h1>
+                    </div>
+                    <p>Seu assistente pessoal para saúde pet.</p>
+                </header>
+                <form id="login-form" class="card">
+                    <div class="input-group">
+                        <label for="cpf">Acesse com seu CPF</label>
+                        <input type="text" id="cpf" placeholder="000.000.000-00" required>
+                        <small>Apenas números. Se não tiver cadastro, um será criado.</small>
+                    </div>
+                    <button type="submit" class="btn-primary">Entrar <i class="ph ph-arrow-right"></i></button>
+                </form>
+            </div>
+        </section>
+
+        <!-- Dashboard Screen -->
+        <section id="screen-dashboard" class="screen">
+            <header class="main-header">
+                <div class="user-info">
+                    <span id="tutor-name">Olá, Tutor</span>
+                    <button id="logout-btn" class="btn-icon"><i class="ph ph-sign-out"></i></button>
+                </div>
+                <div class="brand">
+                    <i class="ph ph-heartbeat"></i>
+                    <span>docz</span>
+                </div>
+            </header>
+
+            <main class="content">
+                <div class="section-header">
+                    <h2>Meus Pets</h2>
+                    <button id="add-pet-btn" class="btn-secondary"><i class="ph ph-plus"></i> Novo Pet</button>
+                </div>
+
+                <div id="pets-list" class="grid-cards">
+                    <!-- Pet cards will be injected here -->
+                    <div class="loading-state">Carregando pets...</div>
+                </div>
+            </main>
+        </section>
+
+        <!-- Pet Details Screen -->
+        <section id="screen-pet-details" class="screen">
+            <header class="main-header">
+                <button id="back-to-dashboard" class="btn-icon"><i class="ph ph-caret-left"></i></button>
+                <div class="pet-brand">
+                    <h2 id="detail-pet-name">Nome do Pet</h2>
+                </div>
+                <div id="pet-status-badge" class="badge">Em dia</div>
+            </header>
+
+            <main class="content">
+                <div class="pet-info-card card">
+                    <div class="pet-avatar">
+                        <i id="pet-icon" class="ph ph-dog"></i>
+                    </div>
+                    <div class="pet-meta">
+                        <span id="detail-pet-species">Cachorro</span>
+                        <span id="detail-pet-breed">Vira-lata</span>
+                    </div>
+                </div>
+
+                <div class="section-header">
+                    <h3>Aplicações & Vacinas</h3>
+                    <button id="add-app-btn" class="btn-secondary btn-sm"><i class="ph ph-plus"></i> Aplicar</button>
+                </div>
+
+                <div id="applications-list" class="timeline">
+                    <!-- Applications will be injected here -->
+                </div>
+            </main>
+        </section>
+
+        <!-- Modals -->
+        <div id="modal-pet" class="modal">
+            <div class="modal-content card">
+                <h3>Cadastrar Novo Pet</h3>
+                <form id="pet-form">
+                    <div class="input-group">
+                        <label>Nome do Pet</label>
+                        <input type="text" id="pet-name" placeholder="Ex: Rex" required>
+                    </div>
+                    <div class="input-group">
+                        <label>Espécie</label>
+                        <select id="pet-species">
+                            <option value="Cachorro">Cachorro</option>
+                            <option value="Gato">Gato</option>
+                            <option value="Outro">Outro</option>
+                        </select>
+                    </div>
+                    <div class="input-group">
+                        <label>Raça</label>
+                        <input type="text" id="pet-breed" placeholder="Ex: Poodle">
+                    </div>
+                    <div class="modal-actions">
+                        <button type="button" class="btn-text close-modal">Cancelar</button>
+                        <button type="submit" class="btn-primary">Salvar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div id="modal-app" class="modal">
+            <div class="modal-content card">
+                <h3>Nova Aplicação</h3>
+                <form id="app-form">
+                    <div class="input-group">
+                        <label>O que foi aplicado?</label>
+                        <select id="app-type" required>
+                            <option value="Vacina">Vacina</option>
+                            <option value="Vermifugação">Vermifugação</option>
+                            <option value="Antipulgas">Antipulgas</option>
+                        </select>
+                    </div>
+                    <div class="input-group">
+                        <label>Descrição/Marca</label>
+                        <input type="text" id="app-desc" placeholder="Ex: V10, Simparic..." required>
+                    </div>
+                    <div class="input-group">
+                        <label>Data da Aplicação</label>
+                        <input type="date" id="app-date" required>
+                    </div>
+                    <div class="modal-actions">
+                        <button type="button" class="btn-text close-modal">Cancelar</button>
+                        <button type="submit" class="btn-primary">Registrar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

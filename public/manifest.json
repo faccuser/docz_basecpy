@@ -1,0 +1,16 @@
+{
+  "name": "Docz - Controle Pet",
+  "short_name": "Docz",
+  "description": "Gerenciador de vacinas e saúde pet",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#F2F4F7",
+  "theme_color": "#005AA3",
+  "icons": [
+    {
+      "src": "https://cdn-icons-png.flaticon.com/512/3047/3047928.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

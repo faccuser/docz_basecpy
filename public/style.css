@@ -1,50 +1,29 @@
-:root {
-    --primaryor: #1D4ED8;
-    --primaryor-dark: #003087;
-    --primaryor-light: #DBEAFE;
-    --primary: #2D6A4F;
-    --primary-dark: #1B4332;
-    --primary-light: #D8F3DC;
-    --accent: #FF9F1C;
-    --accent-light: #FFF3E0;
-    --success: #2D6A4F;
-    --warning: #FF9F1C;
-    --danger: #D00000;
-    --bg: #F8FAF9;
-    --card-bg: #FFFFFF;
-    --text-main: #1D2939;
-    --text-muted: #667085;
-    --border: #E0E5E2;
-    --radius-lg: 12px;
-    --radius-md: 8px;
-    --shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-}
-
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    -webkit-tap-highlight-color: transparent;
 }
 
 body {
     font-family: 'Inter', sans-serif;
-    background-color: var(--bg);
-    color: var(--text-main);
+    background-color: #F8FAF9;
+    color: #1D2939;
     line-height: 1.5;
     overflow-x: hidden;
 }
 
-h1,
-h2,
-h3 {
+h1, h2, h3 {
     font-weight: 700;
 }
+
+
+/* ================================
+   TELAS
+   ================================ */
 
 .screen {
     display: none;
     min-height: 100vh;
-    animation: fadeIn 0.3s ease-out;
 }
 
 .screen.active {
@@ -52,25 +31,17 @@ h3 {
     flex-direction: column;
 }
 
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(10px);
-    }
 
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
+/* ================================
+   BOTÕES
+   ================================ */
 
-/* botoes */
 .btn-primary {
-    background: var(--primary);
+    background: #2D6A4F;
     color: white;
     border: none;
     padding: 14px 24px;
-    border-radius: var(--radius-md);
+    border-radius: 8px;
     font-weight: 600;
     font-size: 1rem;
     cursor: pointer;
@@ -78,20 +49,18 @@ h3 {
     align-items: center;
     justify-content: center;
     gap: 8px;
-    transition: all 0.2s;
 }
 
 .btn-primary:active {
-    transform: scale(0.98);
-    background: var(--primary-dark);
+    background: #1B4332;
 }
 
 .btn-secondary {
-    background: var(--primaryor-light);
-    color: var(--primaryor);
+    background: #DBEAFE;
+    color: #1D4ED8;
     border: none;
     padding: 8px 16px;
-    border-radius: var(--radius-md);
+    border-radius: 8px;
     font-weight: 600;
     font-size: 0.85rem;
     cursor: pointer;
@@ -109,7 +78,7 @@ h3 {
     background: transparent;
     border: none;
     font-size: 1.5rem;
-    color: var(--text-main);
+    color: #1D2939;
     cursor: pointer;
     padding: 8px;
     border-radius: 50%;
@@ -118,18 +87,44 @@ h3 {
 .btn-text {
     background: transparent;
     border: none;
-    color: var(--text-muted);
+    color: #667085;
     font-weight: 600;
     cursor: pointer;
 }
 
-/* entradas */
-.card {
-    background: var(--card-bg);
-    border-radius: var(--radius-lg);
-    padding: 24px;
-    box-shadow: var(--shadow);
+.btn-delete {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    color: #667085;
+    font-size: 1.25rem;
+    cursor: pointer;
+    padding: 4px;
+    border-radius: 4px;
+    background: transparent;
+    border: none;
 }
+
+.btn-delete:hover {
+    color: #D00000;
+}
+
+
+/* ================================
+   CARD GENÉRICO
+   ================================ */
+
+.card {
+    background: #FFFFFF;
+    border-radius: 12px;
+    padding: 24px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+
+/* ================================
+   FORMULÁRIOS
+   ================================ */
 
 .input-group {
     display: flex;
@@ -141,25 +136,28 @@ h3 {
 .input-group label {
     font-size: 0.875rem;
     font-weight: 600;
-    color: var(--text-main);
+    color: #1D2939;
 }
 
-input,
-select {
+input, select {
     padding: 12px 16px;
-    border: 1px solid var(--border);
-    border-radius: var(--radius-md);
+    border: 1px solid #E0E5E2;
+    border-radius: 8px;
     font-size: 1rem;
     font-family: inherit;
     outline: none;
 }
 
 input:focus {
-    border-color: var(--primary);
-    box-shadow: 0 0 0 4px var(--primary-light);
+    border-color: #2D6A4F;
+    box-shadow: 0 0 0 4px #D8F3DC;
 }
 
-/* tela e login */
+
+/* ================================
+   TELA DE LOGIN
+   ================================ */
+
 #screen-login {
     justify-content: center;
     align-items: center;
@@ -186,7 +184,7 @@ input:focus {
 
 .logo i {
     font-size: 2.5rem;
-    color: var(--primary);
+    color: #2D6A4F;
 }
 
 .logo h1 {
@@ -195,13 +193,17 @@ input:focus {
 }
 
 .login-header p {
-    color: var(--text-muted);
+    color: #667085;
     font-size: 1rem;
 }
 
-/* cabeçalho principal */
+
+/* ================================
+   CABEÇALHO PRINCIPAL
+   ================================ */
+
 .main-header {
-    background: var(--card-bg);
+    background: #FFFFFF;
     padding: 12px 20px;
     display: flex;
     align-items: center;
@@ -209,7 +211,7 @@ input:focus {
     position: sticky;
     top: 0;
     z-index: 10;
-    border-bottom: 1px solid var(--border);
+    border-bottom: 1px solid #E0E5E2;
 }
 
 .user-info {
@@ -226,11 +228,15 @@ input:focus {
     display: flex;
     align-items: center;
     gap: 6px;
-    color: var(--primary);
+    color: #2D6A4F;
     font-weight: 700;
 }
 
-/* area de conteudo */
+
+/* ================================
+   ÁREA DE CONTEÚDO
+   ================================ */
+
 .content {
     padding: 24px;
     flex: 1;
@@ -244,7 +250,11 @@ input:focus {
     padding: 4px;
 }
 
-/* cartoes de pets */
+
+/* ================================
+   CARDS DE PETS
+   ================================ */
+
 .grid-cards {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -252,10 +262,11 @@ input:focus {
 }
 
 .pet-card {
+    background: #FFFFFF;
+    border-radius: 12px;
     padding: 12px 16px;
     cursor: pointer;
-    transition: transform 0.2s;
-    border: 1px solid var(--border);
+    border: 1px solid #E0E5E2;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -263,6 +274,7 @@ input:focus {
     overflow: hidden;
 }
 
+/* faixa colorida lateral */
 .pet-card::after {
     content: '';
     position: absolute;
@@ -272,33 +284,28 @@ input:focus {
     width: 6px;
 }
 
-.pet-card.status-em-dia::after {
-    background: var(--success);
-}
-
-.pet-card.status-atrasado::after {
-    background: var(--warning);
-}
-
-.pet-card.status-pendente::after {
-    background: var(--danger);
-}
-
 .pet-card.status-em-dia {
     background: #f0fdf4;
+}
+
+.pet-card.status-em-dia::after {
+    background: #2D6A4F;
 }
 
 .pet-card.status-atrasado {
     background: #fffcf0;
 }
 
+.pet-card.status-atrasado::after {
+    background: #FF9F1C;
+}
+
 .pet-card.status-pendente {
     background: #fff1f1;
 }
 
-.pet-card:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+.pet-card.status-pendente::after {
+    background: #D00000;
 }
 
 .pet-card-main {
@@ -310,9 +317,8 @@ input:focus {
 .pet-card-icon {
     width: 44px;
     height: 44px;
-    /*background: var(--primary-light);*/
     background: transparent;
-    color: var(--primary);
+    color: #2D6A4F;
     border-radius: 8px;
     display: flex;
     align-items: center;
@@ -326,10 +332,14 @@ input:focus {
 
 .pet-card-info p {
     font-size: 0.875rem;
-    color: var(--text-muted);
+    color: #667085;
 }
 
-/* Badges */
+
+/* ================================
+   BADGES
+   ================================ */
+
 .badge {
     padding: 4px 12px;
     border-radius: 100px;
@@ -353,7 +363,11 @@ input:focus {
     color: #C5221F;
 }
 
-/* Timeline dos pets */
+
+/* ================================
+   TIMELINE
+   ================================ */
+
 .timeline {
     margin-top: 10px;
 }
@@ -365,6 +379,7 @@ input:focus {
     position: relative;
 }
 
+/* linha vertical conectando os itens */
 .timeline-item::before {
     content: '';
     position: absolute;
@@ -372,7 +387,7 @@ input:focus {
     top: 34px;
     bottom: 0;
     width: 2px;
-    background: var(--border);
+    background: #E0E5E2;
 }
 
 .timeline-item:last-child::before {
@@ -383,7 +398,7 @@ input:focus {
     width: 40px;
     height: 40px;
     background: white;
-    border: 2px solid var(--border);
+    border: 2px solid #E0E5E2;
     border-radius: 50%;
     display: flex;
     align-items: center;
@@ -396,29 +411,10 @@ input:focus {
 .timeline-content {
     background: white;
     padding: 8px 10px;
-    border-radius: var(--radius-md);
+    border-radius: 8px;
     flex: 1;
-    border: 1px solid var(--border);
+    border: 1px solid #E0E5E2;
     position: relative;
-}
-
-.btn-delete {
-    position: absolute;
-    top: 8px;
-    right: 8px;
-    color: var(--text-muted);
-    font-size: 1.25rem;
-    cursor: pointer;
-    padding: 4px;
-    border-radius: 4px;
-    background: transparent;
-    border: none;
-
-}
-
-.btn-delete:hover {
-    color: var(--danger);
-    /*background: #FEE2E2;*/
 }
 
 .timeline-content h5 {
@@ -428,21 +424,18 @@ input:focus {
 
 .timeline-content .date {
     font-size: 0.75rem;
-    color: var(--text-muted);
+    color: #667085;
 }
 
-/* Detalhes do pet */
+
+/* ================================
+   CABEÇALHO DO DETALHE DO PET
+   ================================ */
+
 .pet-detail-header {
-    background: var(--card-bg);
+    background: #FFFFFF;
     padding: 16px 20px;
-    border-bottom: 1px solid var(--border);
-}
-
-.pet-detail-header .top-bar {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    margin-bottom: 12px;
+    border-bottom: 1px solid #E0E5E2;
 }
 
 .pet-detail-header .pet-main-info {
@@ -454,8 +447,7 @@ input:focus {
 .pet-detail-header .pet-icon-circle {
     width: 48px;
     height: 48px;
-    /*background: var(--primary);*/
-    background: #000;
+    background: #000000;
     color: white;
     border-radius: 50%;
     display: flex;
@@ -464,94 +456,21 @@ input:focus {
     font-size: 1.5rem;
 }
 
-.pet-detail-header h2 {
-    font-size: 1.25rem;
-    margin: 0;
+.pet-detail-header .pet-text {
+    flex: 1;
+    min-width: 0;
 }
 
-.pet-detail-header .pet-meta-text {
-    font-size: 0.85rem;
-    color: var(--text-muted);
-}
-
-#detail-pet-breed {
-    color: var(--text-muted);
-    font-size: 0.9rem;
-}
-
-/* Modais */
-.modal {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.5);
-    z-index: 100;
-    justify-content: center;
-    align-items: center;
-    padding: 20px;
-    backdrop-filter: blur(4px);
-}
-
-.modal.active {
-    display: flex;
-}
-
-.modal-content {
-    width: 100%;
-    max-width: 450px;
-    animation: modalSlide 0.3s ease-out;
-}
-
-@keyframes modalSlide {
-    from {
-        transform: translateY(30px);
-        opacity: 0;
-    }
-
-    to {
-        transform: translateY(0);
-        opacity: 1;
-    }
-}
-
-.modal-actions {
-    display: flex;
-    justify-content: flex-end;
-    gap: 16px;
-    margin-top: 12px;
-}
-
-.loading-state {
-    grid-column: 1 / -1;
-    text-align: center;
-    padding: 40px;
-    color: var(--text-muted);
-}
-
-/* mobile */
-@media (max-width: 600px) {
-    .content {
-        padding: 16px;
-    }
-
-    .grid-cards {
-        grid-template-columns: 1fr;
-    }
-}
-
-/* Otimização do header */
 .pet-detail-header .pet-name-row {
     display: flex;
     align-items: center;
     gap: 12px;
     flex-wrap: wrap;
-    margin-bottom: 0px;
+    margin-bottom: 0;
 }
 
 .pet-detail-header .pet-name-row h2 {
+    font-size: 1.25rem;
     margin: 0;
     flex-shrink: 0;
 }
@@ -566,15 +485,72 @@ input:focus {
     padding: 4px;
 }
 
-.pet-detail-header .pet-text {
-    flex: 1;
-    min-width: 0;
-}
-
 .pet-detail-header .pet-meta-text {
     font-size: 0.85rem;
-    color: var(--text-muted);
+    color: #667085;
     margin-top: -2px;
+}
+
+
+/* ================================
+   MODAIS
+   ================================ */
+
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 100;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.modal.active {
+    display: flex;
+}
+
+.modal-content {
+    width: 100%;
+    max-width: 450px;
+}
+
+.modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 16px;
+    margin-top: 12px;
+}
+
+
+/* ================================
+   ESTADO DE CARREGAMENTO
+   ================================ */
+
+.loading-state {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 40px;
+    color: #667085;
+}
+
+
+/* ================================
+   RESPONSIVO - TELAS PEQUENAS
+   ================================ */
+
+@media (max-width: 600px) {
+    .content {
+        padding: 16px;
+    }
+
+    .grid-cards {
+        grid-template-columns: 1fr;
+    }
 }
 
 @media (max-width: 480px) {

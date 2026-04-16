@@ -113,7 +113,7 @@ async function deletePet(id) {
 }
 
 async function deleteApplication(id) {
-    if (!confirm('Deseja remover este registro de aplicação?')) return;
+    if (!confirm('Deseja remover este registro de tratamento?')) return;
     const response = await fetch(`/api/applications/${id}`, { method: 'DELETE' });
     if (response.ok) {
         fetchApplications(State.currentPet.id);

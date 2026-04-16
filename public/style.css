@@ -35,7 +35,6 @@ body {
     overflow-x: hidden;
 }
 
-/* Typography and Elements */
 h1,
 h2,
 h3 {
@@ -65,7 +64,7 @@ h3 {
     }
 }
 
-/* Buttons */
+/* botoes */
 .btn-primary {
     background: var(--primary);
     color: white;
@@ -124,7 +123,7 @@ h3 {
     cursor: pointer;
 }
 
-/* Forms and Inputs */
+/* entradas */
 .card {
     background: var(--card-bg);
     border-radius: var(--radius-lg);
@@ -160,7 +159,7 @@ input:focus {
     box-shadow: 0 0 0 4px var(--primary-light);
 }
 
-/* Login Screen */
+/* tela e login */
 #screen-login {
     justify-content: center;
     align-items: center;
@@ -200,7 +199,7 @@ input:focus {
     font-size: 1rem;
 }
 
-/* Main Header */
+/* cabeçalho principal */
 .main-header {
     background: var(--card-bg);
     padding: 12px 20px;
@@ -231,7 +230,7 @@ input:focus {
     font-weight: 700;
 }
 
-/* Content Area */
+/* area de conteudo */
 .content {
     padding: 24px;
     flex: 1;
@@ -245,7 +244,7 @@ input:focus {
     padding: 4px;
 }
 
-/* Pet Cards */
+/* cartoes de pets */
 .grid-cards {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -311,7 +310,8 @@ input:focus {
 .pet-card-icon {
     width: 44px;
     height: 44px;
-    background: var(--primary-light);
+    /*background: var(--primary-light);*/
+    background: transparent;
     color: var(--primary);
     border-radius: 8px;
     display: flex;
@@ -353,7 +353,7 @@ input:focus {
     color: #C5221F;
 }
 
-/* Timeline */
+/* Timeline dos pets */
 .timeline {
     margin-top: 10px;
 }
@@ -431,7 +431,7 @@ input:focus {
     color: var(--text-muted);
 }
 
-/* Pet Detail Header Unified */
+/* Detalhes do pet */
 .pet-detail-header {
     background: var(--card-bg);
     padding: 16px 20px;
@@ -479,7 +479,7 @@ input:focus {
     font-size: 0.9rem;
 }
 
-/* Modals */
+/* Modais */
 .modal {
     display: none;
     position: fixed;
@@ -531,7 +531,7 @@ input:focus {
     color: var(--text-muted);
 }
 
-/* Mobile Adjustments */
+/* mobile */
 @media (max-width: 600px) {
     .content {
         padding: 16px;
@@ -569,7 +569,6 @@ input:focus {
 .pet-detail-header .pet-text {
     flex: 1;
     min-width: 0;
-    /* Permite que o texto quebre corretamente */
 }
 
 .pet-detail-header .pet-meta-text {
@@ -578,7 +577,6 @@ input:focus {
     margin-top: -2px;
 }
 
-/* Ajuste responsivo para telas pequenas */
 @media (max-width: 480px) {
     .pet-detail-header .pet-name-row {
         gap: 8px;

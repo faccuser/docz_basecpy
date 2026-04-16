@@ -173,8 +173,8 @@ async function renderApplications() {
     State.applications.forEach(app => {
         const iconMap = {
             'antirrabica': 'ph ph-syringe',
-            'polivalente': 'ph ph-syringe',
-            'vermifugacao': 'ph ph-pill',
+            'polivalente': 'ph ph-virus',
+            'vermifugacao': 'ph ph-coins',
             'carrapaticida': 'ph ph-bug'
         };
 

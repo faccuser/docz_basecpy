@@ -241,7 +241,8 @@ input:focus {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
+    padding: 4px;
 }
 
 /* Pet Cards */
@@ -354,13 +355,13 @@ input:focus {
 
 /* Timeline */
 .timeline {
-    margin-top: 16px;
+    margin-top: 10px;
 }
 
 .timeline-item {
     display: flex;
-    gap: 16px;
-    padding-bottom: 24px;
+    gap: 8px;
+    padding-bottom: 10px;
     position: relative;
 }
 
@@ -368,7 +369,7 @@ input:focus {
     content: '';
     position: absolute;
     left: 19px;
-    top: 40px;
+    top: 34px;
     bottom: 0;
     width: 2px;
     background: var(--border);
@@ -394,7 +395,7 @@ input:focus {
 
 .timeline-content {
     background: white;
-    padding: 12px;
+    padding: 8px 10px;
     border-radius: var(--radius-md);
     flex: 1;
     border: 1px solid var(--border);
@@ -410,11 +411,14 @@ input:focus {
     cursor: pointer;
     padding: 4px;
     border-radius: 4px;
+    background: transparent;
+    border: none;
+
 }
 
 .btn-delete:hover {
     color: var(--danger);
-    background: #FEE2E2;
+    /*background: #FEE2E2;*/
 }
 
 .timeline-content h5 {
@@ -444,13 +448,14 @@ input:focus {
 .pet-detail-header .pet-main-info {
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 10px;
 }
 
 .pet-detail-header .pet-icon-circle {
     width: 48px;
     height: 48px;
-    background: var(--primary);
+    /*background: var(--primary);*/
+    background: #000;
     color: white;
     border-radius: 50%;
     display: flex;
@@ -534,5 +539,57 @@ input:focus {
 
     .grid-cards {
         grid-template-columns: 1fr;
+    }
+}
+
+/* Otimização do header */
+.pet-detail-header .pet-name-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-bottom: 0px;
+}
+
+.pet-detail-header .pet-name-row h2 {
+    margin: 0;
+    flex-shrink: 0;
+}
+
+.pet-detail-header .pet-name-row .badge {
+    flex-shrink: 0;
+}
+
+.pet-detail-header .pet-name-row .btn-icon {
+    margin-left: auto;
+    flex-shrink: 0;
+    padding: 4px;
+}
+
+.pet-detail-header .pet-text {
+    flex: 1;
+    min-width: 0;
+    /* Permite que o texto quebre corretamente */
+}
+
+.pet-detail-header .pet-meta-text {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    margin-top: -2px;
+}
+
+/* Ajuste responsivo para telas pequenas */
+@media (max-width: 480px) {
+    .pet-detail-header .pet-name-row {
+        gap: 8px;
+    }
+
+    .pet-detail-header .pet-name-row h2 {
+        font-size: 1.1rem;
+    }
+
+    .pet-detail-header .pet-name-row .badge {
+        font-size: 0.7rem;
+        padding: 2px 8px;
     }
 }

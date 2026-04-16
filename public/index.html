@@ -22,7 +22,7 @@
                         <i class="ph ph-heartbeat"></i>
                         <h1>docz</h1>
                     </div>
-                    <p>Seu assistente pessoal para saúde pet.</p>
+                    <p>Controle a saúde do seu pet.</p>
                 </header>
                 <form id="login-form" class="card">
                     <div class="input-group">
@@ -38,13 +38,13 @@
         <!-- Dashboard Screen -->
         <section id="screen-dashboard" class="screen">
             <header class="main-header">
-                <div class="user-info">
-                    <span id="tutor-name">Tutor</span>
-                    <button id="logout-btn" class="btn-icon"><i class="ph ph-sign-out"></i></button>
-                </div>
                 <div class="brand">
                     <i class="ph ph-heartbeat"></i>
                     <span>docz</span>
+                </div>
+                <div class="user-info">
+                    <span id="tutor-name">Tutor</span>
+                    <button id="logout-btn" class="btn-icon"><i class="ph ph-sign-out"></i></button>
                 </div>
             </header>
 
@@ -63,19 +63,20 @@
 
         <!-- Pet Details Screen -->
         <section id="screen-pet-details" class="screen">
+
             <header class="pet-detail-header">
-                <div class="top-bar">
-                    <button id="back-to-dashboard" class="btn-icon"><i class="ph ph-caret-left"></i></button>
-                    <div id="pet-status-badge" class="badge">Em dia</div>
-                    <button id="delete-pet-btn" class="btn-icon" title="Remover Pet"><i class="ph ph-trash"></i></button>
-                </div>
-                
                 <div class="pet-main-info">
                     <div class="pet-icon-circle">
                         <i id="pet-icon" class="ph ph-dog"></i>
                     </div>
                     <div class="pet-text">
-                        <h2 id="detail-pet-name">Nome do Pet</h2>
+                        <div class="pet-name-row">
+                            <h2 id="detail-pet-name">Nome</h2>
+                            <div id="pet-status-badge" class="badge">Em dia</div>
+                            <button id="delete-pet-btn" class="btn-icon" title="Remover Pet">
+                                <i class="ph ph-trash"></i>
+                            </button>
+                        </div>
                         <div class="pet-meta-text">
                             <span id="detail-pet-species">Cachorro</span> • 
                             <span id="detail-pet-breed">Vira-lata</span>
@@ -86,8 +87,9 @@
 
             <main class="content">
                 <div class="section-header">
-                    <h3>Aplicações</h3>
-                    <button id="add-app-btn" class="btn-secondary btn-sm"><i class="ph ph-plus"></i> Aplicar</button>
+                    <button id="back-to-dashboard" class="btn-icon"><i class="ph ph-caret-left"></i></button>
+                    <h3>Tratamento</h3>
+                    <button id="add-app-btn" class="btn-secondary btn-sm"><i class="ph ph-plus"></i> Nova</button>
                 </div>
 
                 <div id="applications-list" class="timeline">
@@ -103,14 +105,13 @@
                 <form id="pet-form">
                     <div class="input-group">
                         <label>Nome do Pet</label>
-                        <input type="text" id="pet-name" placeholder="Ex: Rex" required>
+                        <input type="text" id="pet-name" required>
                     </div>
                     <div class="input-group">
                         <label>Espécie</label>
                         <select id="pet-species">
                             <option value="Cachorro">Cachorro</option>
                             <option value="Gato">Gato</option>
-                            <option value="Outro">Outro</option>
                         </select>
                     </div>
                     <div class="input-group">
@@ -127,27 +128,26 @@
 
         <div id="modal-app" class="modal">
             <div class="modal-content card">
-                <h3>Nova Aplicação</h3>
+                <!--<h3>Novo Tratamento</h3>-->
                 <form id="app-form">
                     <div class="input-group">
-                        <label>O que foi aplicado?</label>
                         <select id="app-type" required>
-                            <option value="antirrabica">Vacina Antirrábica</option>
-                            <option value="polivalente">Vacina Polivalente (V8/V10/V12)</option>
-                            <option value="vermifugacao">Vermifugação (Lombriguinha)</option>
-                            <option value="carrapaticida">Carrapaticida / Antipulgas</option>
+                            <option value="antirrabica">Antirrábica (Vacina)</option>
+                            <option value="polivalente">Polivalente (Vacina)</option>
+                            <option value="vermifugacao">Vermifugação</option>
+                            <option value="carrapaticida">Carrapaticida</option>
                         </select>
                     </div>
                     <div class="input-group">
-                        <label>Descrição/Marca</label>
-                        <input type="text" id="app-desc" placeholder="Ex: Nobivac, Simparic..." required>
+                        <label>Descrição</label>
+                        <input type="text" id="app-desc" required>
                     </div>
                     <div class="input-group">
                         <label>No. de Lote</label>
-                        <input type="text" id="app-batch" placeholder="Ex: 12345/2024" required>
+                        <input type="text" id="app-batch" required>
                     </div>
                     <div class="input-group">
-                        <label>Data da Aplicação</label>
+                        <label>Data da aplicação</label>
                         <input type="date" id="app-date" required>
                     </div>
                     <div class="modal-actions">

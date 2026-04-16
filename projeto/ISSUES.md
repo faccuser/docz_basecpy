@@ -95,3 +95,24 @@ Este documento descreve as issues propostas para a evolução do protótipo MVP 
   - Criar campo de senha (hash com `bcrypt`).
   - Implementar fluxo de "Esqueci minha senha" (envio de e-mail ou código de validação).
   - Adicionar JWT (JSON Web Tokens) para sessões seguras e proteção das rotas de API.
+
+---
+
+## Novos Conceitos
+
+### ISSUE-09: Certificado Digital (Selo de Autenticidade)
+[PRIORIDADE: Média]
+[STATUS: Pendente]
+
+- **Descrição**: Criar uma versão eletrônica do certificado "Em Dia". Em vez de um PDF, o sistema gera um link público (estático/read-only) para comprovar a saúde do pet.
+- **Requisitos**:
+  - **Link Único**: Gerar uma URL com um hash (ex: UUID ou MD5) para identificar a consulta de forma única.
+  - **Página de Visualização**: Criar uma rota no frontend que exiba os dados do pet e o histórico de aplicações em modo "Apenas Leitura" (sem formulários ou botões de edição).
+  - **Timestamp e Autenticidade**: Exibir no topo da página a data e hora em que o "selo" foi gerado e o status atual.
+  - **Segurança**: Garantir que o link não permita acesso a dados sensíveis do tutor, apenas os dados públicos do pet e histórico de saúde.
+
+### ISSUE-10: [Aguardando Definição]
+[STATUS: Pendente]
+
+- *Nota: Aguardando a segunda sugestão mencionada.*
+

@@ -99,9 +99,17 @@ Ao selecionar um pet da lista, é apresentada a listagem de seus tratamentos, qu
 
 
 
-## Próximos passos
-
-Ver issues do projeto
+## Roadmap
+Sugestões de evolução e melhorias
+#1: Upload de Imagem de Perfil
+#2: Upload de Imagem de Lote/Etiqueta
+#3: Validação de registro por Código (QR / EAN13)
+#4: Registro via QR Code "Docz-Ready"
+#5: Emissão de Certificado "Em Dia"
+#6: Notificações de Vencimento
+#7: Dashboards e Indicadores Visuais
+#8: Autenticação Robusta e Recuperação
+#9: Certificado Digital (Selo de Autenticidade)
 
 
 ---
